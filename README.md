@@ -6,12 +6,12 @@ This repository contains a PowerShell script that downloads the Hong Kong Observ
 
 File: [fetch_rainfall.ps1](fetch_rainfall.ps1)
 
-Default output: `hourly_rainfall.txt` in the same folder as the script.
+Default output: `rainfall 21Jul 1600HKT.txt`-style filenames in the same folder as the script, based on the record time returned by the API.
 
 ## Run manually
 
 ```powershell
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File "C:\path\to\fetch_rainfall.ps1" -OutputPath "C:\path\to\hourly_rainfall.txt"
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File "C:\path\to\fetch_rainfall.ps1"
 ```
 
 ## Task Scheduler
@@ -19,5 +19,5 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File "C:\path\to\fetch_rainfa
 Use these values in a scheduled task:
 
 - Program/script: `powershell.exe`
-- Add arguments: `-NoProfile -ExecutionPolicy Bypass -File "C:\path\to\fetch_rainfall.ps1" -OutputPath "C:\path\to\hourly_rainfall.txt"`
+- Add arguments: `-NoProfile -ExecutionPolicy Bypass -File "C:\path\to\fetch_rainfall.ps1"`
 - Start in: `C:\path\to`

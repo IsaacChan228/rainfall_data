@@ -1,5 +1,5 @@
 param(
-    [string]$OutputPath = (Join-Path $PSScriptRoot 'hourly_rainfall.txt'),
+    [string]$OutputPath,
     [string]$Url = 'https://data.weather.gov.hk/weatherAPI/opendata/hourlyRainfall.php?lang=en'
 )
 
@@ -11,6 +11,18 @@ try {
 
     if ([string]::IsNullOrWhiteSpace($content)) {
         throw 'The response body was empty.'
+    }
+
+    $data = $content | ConvertFrom-Json
+    if (-not $data.obsTime) {
+        throw 'The response did not contain an obsTime value.'
+    }
+
+    $takenTime = [System.DateTimeOffset]::Parse($data.obsTime).ToOffset([TimeSpan]::FromHours(8))
+    $defaultFileName = 'rainfall {0} {1}HKT.txt' -f $takenTime.ToString('ddMMM', [System.Globalization.CultureInfo]::InvariantCulture), $takenTime.ToString('HHmm')
+
+    if ([string]::IsNullOrWhiteSpace($OutputPath)) {
+        $OutputPath = Join-Path $PSScriptRoot $defaultFileName
     }
 
     $directory = Split-Path -Parent $OutputPath
