@@ -6,7 +6,18 @@ param(
 $ErrorActionPreference = 'Stop'
 
 try {
-    $response = Invoke-WebRequest -Uri $Url -Method Get -Headers @{ Accept = 'application/json' } -TimeoutSec 30
+    $invokeWebRequestParams = @{
+        Uri = $Url
+        Method = 'Get'
+        Headers = @{ Accept = 'application/json' }
+        TimeoutSec = 30
+    }
+
+    if ((Get-Command Invoke-WebRequest).Parameters.ContainsKey('UseBasicParsing')) {
+        $invokeWebRequestParams.UseBasicParsing = $true
+    }
+
+    $response = Invoke-WebRequest @invokeWebRequestParams
     $content = $response.Content
 
     if ([string]::IsNullOrWhiteSpace($content)) {

@@ -1,0 +1,36 @@
+location,threshold_x,probability_location_gt_x_given_tai_po_market_gt_x,samples_used,co_occurrence_count
+Tai Mei Tuk,15.0,0.862430,139,6
+Ta Kwu Ling,15.0,0.590022,139,4
+Tai Lung,15.0,0.583177,139,4
+Kwun Tong,15.0,0.456362,139,3
+Pak Tam Chung,15.0,0.456362,139,3
+Broadcast Drive,15.0,0.446241,139,3
+Peng Chau,15.0,0.446241,139,3
+San Po Kong,15.0,0.446241,139,3
+Sha Tin,15.0,0.446241,139,3
+Sham Shui Po,15.0,0.446241,139,3
+Sheung Shui,15.0,0.446241,139,3
+Kingâs Park,15.0,0.325920,139,2
+Tsuen Wan Ho Koon,15.0,0.312109,122,2
+Cheung Ching,15.0,0.311892,139,2
+Kau Sai Chau,15.0,0.311892,139,2
+Sai Kung,15.0,0.311892,139,2
+Tseung Kwan O,15.0,0.311892,139,2
+Cheung Chau,15.0,0.201158,139,1
+Stanley,15.0,0.201158,139,1
+Happy Valley,15.0,0.182887,139,1
+Magazine Gap,15.0,0.182887,139,1
+Shau Kei Wan,15.0,0.182887,139,1
+Wong Chuk Hang,15.0,0.182887,139,1
+Clear Water Bay,15.0,0.087562,131,0
+Lau Fau Shan,15.0,0.087527,139,0
+Waglan Island,15.0,0.087527,139,0
+The Peak,15.0,0.067124,135,0
+Hong Kong International Airport,15.0,0.067111,139,0
+Hong Kong Observatory,15.0,0.067111,139,0
+Kai Tak,15.0,0.067111,139,0
+Ngong Ping,15.0,0.067111,139,0
+Shui Pin Wai,15.0,0.067111,139,0
+Tuen Mun,15.0,0.067111,139,0
+Wetland Park,15.0,0.067111,139,0
+Shek Kong,15.0,NA,0,0
