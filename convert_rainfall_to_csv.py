@@ -7,6 +7,12 @@ from datetime import datetime
 from pathlib import Path
 
 
+STATION_NAME_NORMALIZATION = {
+    "Kingâs Park": "King's Park",
+    "King’s Park": "King's Park",
+}
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Convert rainfall txt files in Data/ into a wide CSV by obsTime."
@@ -39,7 +45,10 @@ def load_rainfall_records(input_dir: Path) -> tuple[list[str], list[dict[str, st
         record: dict[str, str] = {"obsTime": obs_time}
 
         for rainfall in data.get("hourlyRainfall", []):
-            station_name = rainfall["automaticWeatherStation"]
+            station_name = STATION_NAME_NORMALIZATION.get(
+                rainfall["automaticWeatherStation"],
+                rainfall["automaticWeatherStation"],
+            )
             station_names.add(station_name)
             record[station_name] = rainfall.get("value", "")
 

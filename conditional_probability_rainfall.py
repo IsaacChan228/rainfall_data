@@ -7,17 +7,19 @@ from pathlib import Path
 
 
 @dataclass
-class NBResult:
+class ConditionalProbabilityResult:
     location: str
-    probability: float
-    samples_used: int
-    event_count: int
+    x_threshold: float
+    y_threshold: float
+    probability: float | None
+    condition_count: int
+    co_occurrence_count: int
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description=(
-            "Estimate conditional probability from rainfall amounts using thresholds X and Y: "
+            "Calculate direct conditional probability from rainfall data: "
             "P(location rainfall < Y | Tai Po Market rainfall > X)."
         )
     )
@@ -45,18 +47,14 @@ def parse_args() -> argparse.Namespace:
         "--y-threshold",
         type=float,
         default=None,
-        help="Rainfall threshold Y in mm for target event: location rainfall < Y.",
+        help=(
+            "Rainfall threshold Y in mm for target event: location rainfall < Y."
+        ),
     )
     parser.add_argument(
         "--output",
-        default="naive_bayes_probabilities.csv",
-        help="Path to output CSV (default: naive_bayes_probabilities.csv).",
-    )
-    parser.add_argument(
-        "--alpha",
-        type=float,
-        default=1.0,
-        help="Laplace smoothing parameter (default: 1.0).",
+        default="conditional_probabilities.csv",
+        help="Path to output CSV (default: conditional_probabilities.csv).",
     )
     return parser.parse_args()
 
@@ -86,17 +84,9 @@ def to_float(value: str) -> float | None:
         return None
 
 
-def posterior_x1(prior_y1: float, p_x1_given_y1: float, p_x1_given_y0: float) -> float:
-    numerator = p_x1_given_y1 * prior_y1
-    denominator = numerator + (p_x1_given_y0 * (1.0 - prior_y1))
-    if denominator == 0.0:
-        return 0.0
-    return numerator / denominator
-
-
-def compute_probabilities(
-    input_path: Path, x_threshold: float, y_threshold: float, alpha: float
-) -> list[NBResult]:
+def compute_conditional_probabilities(
+    input_path: Path, x_threshold: float, y_threshold: float
+) -> list[ConditionalProbabilityResult]:
     with input_path.open("r", encoding="utf-8", newline="") as file_handle:
         reader = csv.DictReader(file_handle)
         if reader.fieldnames is None:
@@ -105,19 +95,14 @@ def compute_probabilities(
         if "Tai Po Market" not in reader.fieldnames:
             raise ValueError('Column "Tai Po Market" not found in input CSV.')
 
-        locations = [name for name in reader.fieldnames if name != "obsTime"]
-        target_locations = [name for name in locations if name != "Tai Po Market"]
-
+        locations = [name for name in reader.fieldnames if name not in {"obsTime", "Tai Po Market"}]
         rows = list(reader)
 
-    results: list[NBResult] = []
+    results: list[ConditionalProbabilityResult] = []
 
-    for location in target_locations:
-        n = 0
-        n_y1 = 0
-        n_x1_y1 = 0
-        n_y0 = 0
-        n_x1_y0 = 0
+    for location in locations:
+        condition_count = 0
+        co_occurrence_count = 0
 
         for row in rows:
             tai_po_value = to_float(row.get("Tai Po Market", ""))
@@ -126,64 +111,30 @@ def compute_probabilities(
             if tai_po_value is None or location_value is None:
                 continue
 
-            x_is_1 = tai_po_value > x_threshold
-            y_is_1 = location_value < y_threshold
-            n += 1
+            if tai_po_value > x_threshold:
+                condition_count += 1
+                if location_value < y_threshold:
+                    co_occurrence_count += 1
 
-            if y_is_1:
-                n_y1 += 1
-                if x_is_1:
-                    n_x1_y1 += 1
-            else:
-                n_y0 += 1
-                if x_is_1:
-                    n_x1_y0 += 1
-
-        if n == 0:
-            results.append(
-                NBResult(
-                    location=location,
-                    probability=0.0,
-                    samples_used=0,
-                    event_count=0,
-                )
-            )
-            continue
-
-        prior_y1 = (n_y1 + alpha) / (n + 2 * alpha)
-        p_x1_given_y1 = (n_x1_y1 + alpha) / (n_y1 + 2 * alpha)
-        p_x1_given_y0 = (n_x1_y0 + alpha) / (n_y0 + 2 * alpha)
-
-        p_y1_given_x1 = posterior_x1(
-            prior_y1=prior_y1,
-            p_x1_given_y1=p_x1_given_y1,
-            p_x1_given_y0=p_x1_given_y0,
-        )
-
-        event_count = sum(
-            1
-            for row in rows
-            if to_float(row.get("Tai Po Market", "")) is not None
-            and to_float(row.get(location, "")) is not None
-            and to_float(row.get("Tai Po Market", "")) > x_threshold
-            and to_float(row.get(location, "")) < y_threshold
-        )
+        probability = None
+        if condition_count > 0:
+            probability = co_occurrence_count / condition_count
 
         results.append(
-            NBResult(
+            ConditionalProbabilityResult(
                 location=location,
-                probability=p_y1_given_x1,
-                samples_used=n,
-                event_count=event_count,
+                x_threshold=x_threshold,
+                y_threshold=y_threshold,
+                probability=probability,
+                condition_count=condition_count,
+                co_occurrence_count=co_occurrence_count,
             )
         )
 
     return results
 
 
-def write_results(
-    output_path: Path, x_threshold: float, y_threshold: float, results: list[NBResult]
-) -> None:
+def write_results(output_path: Path, results: list[ConditionalProbabilityResult]) -> None:
     output_path.parent.mkdir(parents=True, exist_ok=True)
     with output_path.open("w", encoding="utf-8", newline="") as file_handle:
         writer = csv.writer(file_handle)
@@ -192,21 +143,22 @@ def write_results(
                 "location",
                 "threshold_x_condition_tai_po_market_above",
                 "threshold_y_target_location_below",
-                "probability_location_rainfall_below_y_given_tai_po_market_rainfall_above_x",
-                "samples_used",
+                "direct_conditional_probability_location_rainfall_below_y_given_tai_po_market_rainfall_above_x",
+                "condition_count_tai_po_market_above_x",
                 "co_occurrence_count",
             ]
         )
+
         for item in results:
-            probability_value = "NA" if item.event_count == 0 else f"{item.probability:.6f}"
+            probability_value = "NA" if item.probability is None else f"{item.probability:.6f}"
             writer.writerow(
                 [
                     item.location,
-                    x_threshold,
-                    y_threshold,
+                    item.x_threshold,
+                    item.y_threshold,
                     probability_value,
-                    item.samples_used,
-                    item.event_count,
+                    item.condition_count,
+                    item.co_occurrence_count,
                 ]
             )
 
@@ -217,18 +169,12 @@ def main() -> None:
     output_path = Path(args.output)
     x_threshold, y_threshold = resolve_thresholds(args)
 
-    results = compute_probabilities(
+    results = compute_conditional_probabilities(
         input_path=input_path,
         x_threshold=x_threshold,
         y_threshold=y_threshold,
-        alpha=args.alpha,
     )
-    write_results(
-        output_path=output_path,
-        x_threshold=x_threshold,
-        y_threshold=y_threshold,
-        results=results,
-    )
+    write_results(output_path=output_path, results=results)
 
 
 if __name__ == "__main__":

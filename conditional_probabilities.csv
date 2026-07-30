@@ -1,0 +1,36 @@
+location,threshold_x_condition_tai_po_market_above,threshold_y_target_location_below,direct_conditional_probability_location_rainfall_below_y_given_tai_po_market_rainfall_above_x,condition_count_tai_po_market_above_x,co_occurrence_count
+Broadcast Drive,10.0,5.0,0.000000,6,0
+Cheung Chau,10.0,5.0,0.333333,6,2
+Cheung Ching,10.0,5.0,0.000000,6,0
+Clear Water Bay,10.0,5.0,0.166667,6,1
+Happy Valley,10.0,5.0,0.000000,6,0
+Hong Kong International Airport,10.0,5.0,0.833333,6,5
+Hong Kong Observatory,10.0,5.0,0.000000,6,0
+Kai Tak,10.0,5.0,0.166667,6,1
+Kau Sai Chau,10.0,5.0,0.166667,6,1
+King's Park,10.0,5.0,0.166667,6,1
+Kwun Tong,10.0,5.0,0.000000,6,0
+Lau Fau Shan,10.0,5.0,0.833333,6,5
+Magazine Gap,10.0,5.0,0.000000,6,0
+Ngong Ping,10.0,5.0,0.500000,6,3
+Pak Tam Chung,10.0,5.0,0.000000,6,0
+Peng Chau,10.0,5.0,0.166667,6,1
+Sai Kung,10.0,5.0,0.000000,6,0
+San Po Kong,10.0,5.0,0.000000,6,0
+Sha Tin,10.0,5.0,0.000000,6,0
+Sham Shui Po,10.0,5.0,0.000000,6,0
+Shau Kei Wan,10.0,5.0,0.000000,6,0
+Shek Kong,10.0,5.0,NA,0,0
+Sheung Shui,10.0,5.0,0.166667,6,1
+Shui Pin Wai,10.0,5.0,0.333333,6,2
+Stanley,10.0,5.0,0.500000,6,3
+Ta Kwu Ling,10.0,5.0,0.166667,6,1
+Tai Lung,10.0,5.0,0.000000,6,0
+Tai Mei Tuk,10.0,5.0,0.000000,6,0
+The Peak,10.0,5.0,0.000000,6,0
+Tseung Kwan O,10.0,5.0,0.166667,6,1
+Tsuen Wan Ho Koon,10.0,5.0,0.000000,6,0
+Tuen Mun,10.0,5.0,0.333333,6,2
+Waglan Island,10.0,5.0,0.500000,6,3
+Wetland Park,10.0,5.0,0.333333,6,2
+Wong Chuk Hang,10.0,5.0,0.000000,6,0
