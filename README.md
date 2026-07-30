@@ -52,11 +52,11 @@ python convert_antenna_to_csv.py --input-dir Antenna --output-dir Antenna_HKT
 
 File: [estimate_antenna_rainfall_relationship.py](estimate_antenna_rainfall_relationship.py)
 
-This script processes each file in [Antenna_HKT/](Antenna_HKT) separately, bucket-averages the signal drop for that antenna over 15-minute windows, linearly interpolates rainfall onto the same buckets, and then fits a linear equation constrained to pass through the origin with `Tai Po Market` rainfall as the input variable and that antenna's `Signal drop` as the output variable.
+This script processes each file in [Antenna_HKT/](Antenna_HKT) separately, bucket-maxes the signal drop for that antenna over 5-minute windows, linearly interpolates rainfall onto the same buckets, and then fits a linear equation constrained to pass through the origin with `Tai Po Market` rainfall as the input variable and that antenna's `Signal drop` as the output variable.
 
 It writes SVG plots to [antenna_rainfall_plots/](antenna_rainfall_plots) for each antenna: one shows the rainfall vs signal-drop relationship together with the fitted linear equation, and another shows the time-series check for rainfall and signal drop. It also writes an aggregate [average_rainfall_signal_drop_equation.svg](antenna_rainfall_plots/average_rainfall_signal_drop_equation.svg) plot that overlays all antenna bucketed points with the averaged linear equation.
 
-The output CSV includes one row per antenna, with `antenna` and `average_signal_drop` for the 15-minute bucketed signal-drop values used in that fit, plus an `AVERAGE` summary row that averages the quadratic coefficients across all antenna equations.
+The output CSV includes one row per antenna, with `antenna` and `average_signal_drop` for the 5-minute bucketed signal-drop values used in that fit, plus an `AVERAGE` summary row that averages the linear coefficients across all antenna equations.
 
 It also writes [antenna_rainfall_buckets.csv](antenna_rainfall_buckets.csv) with `antenna`, `timebucket`, `rainfall`, and `signal_drop` for manual checking.
 

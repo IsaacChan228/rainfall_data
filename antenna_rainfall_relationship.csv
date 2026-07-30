@@ -1,6 +1,6 @@
 antenna,samples_used,average_signal_drop,equation,coefficient_a,coefficient_b,coefficient_c,correlation,r_squared
-TP10,848,0.789911,Signal drop = 0.161063 * Tai Po Market rainfall,0.161063,0.000000,0.000000,0.369932,0.136849
-TP15,848,0.198930,Signal drop = 0.101700 * Tai Po Market rainfall,0.101700,0.000000,0.000000,0.523803,0.274369
-TP4,848,0.458915,Signal drop = 0.180860 * Tai Po Market rainfall,0.180860,0.000000,0.000000,0.598706,0.358449
-TP5,848,0.132741,Signal drop = 0.069413 * Tai Po Market rainfall,0.069413,0.000000,0.000000,0.569985,0.324882
-AVERAGE,3392,0.395124,Signal drop = 0.128259 * Tai Po Market rainfall,0.128259,0.000000,0.000000,NA,NA
+TP10,2542,1.087042,Signal drop = 0.224115 * Tai Po Market rainfall,0.224115,0.000000,0.000000,0.416279,0.173288
+TP15,2542,0.527891,Signal drop = 0.172192 * Tai Po Market rainfall,0.172192,0.000000,0.000000,0.526986,0.277714
+TP4,2542,0.755362,Signal drop = 0.263270 * Tai Po Market rainfall,0.263270,0.000000,0.000000,0.570786,0.325796
+TP5,2542,0.259111,Signal drop = 0.108989 * Tai Po Market rainfall,0.108989,0.000000,0.000000,0.578104,0.334205
+AVERAGE,10168,0.657351,Signal drop = 0.192142 * Tai Po Market rainfall,0.192142,0.000000,0.000000,NA,NA

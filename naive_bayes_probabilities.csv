@@ -1,36 +1,36 @@
 location,threshold_x_condition_tai_po_market_above,threshold_y_target_location_below,probability_location_rainfall_below_y_given_tai_po_market_rainfall_above_x,samples_used,co_occurrence_count
-Broadcast Drive,5.0,3.0,0.223285,139,2
-Cheung Chau,5.0,3.0,0.444886,139,5
-Cheung Ching,5.0,3.0,0.148979,139,1
-Clear Water Bay,5.0,3.0,0.297299,131,3
-Happy Valley,5.0,3.0,0.222673,139,2
-Hong Kong International Airport,5.0,3.0,0.299440,139,3
-Hong Kong Observatory,5.0,3.0,0.297411,139,3
-Kai Tak,5.0,3.0,0.222673,139,2
-Kau Sai Chau,5.0,3.0,0.148979,139,1
-King's Park,5.0,3.0,0.224761,139,2
-Kwun Tong,5.0,3.0,0.221637,139,2
-Lau Fau Shan,5.0,3.0,0.739310,139,9
-Magazine Gap,5.0,3.0,0.222673,139,2
-Ngong Ping,5.0,3.0,0.368499,139,4
-Pak Tam Chung,5.0,3.0,0.223285,139,2
-Peng Chau,5.0,3.0,0.297411,139,3
-Sai Kung,5.0,3.0,0.223285,139,2
-San Po Kong,5.0,3.0,0.224761,139,2
-Sha Tin,5.0,3.0,0.224761,139,2
-Sham Shui Po,5.0,3.0,0.222673,139,2
-Shau Kei Wan,5.0,3.0,0.221637,139,2
-Shek Kong,5.0,3.0,NA,0,0
-Sheung Shui,5.0,3.0,0.224761,139,2
-Shui Pin Wai,5.0,3.0,0.448104,139,5
-Stanley,5.0,3.0,0.443608,139,5
-Ta Kwu Ling,5.0,3.0,0.223285,139,2
-Tai Lung,5.0,3.0,0.224761,139,2
-Tai Mei Tuk,5.0,3.0,0.149933,139,1
-The Peak,5.0,3.0,0.223239,135,2
-Tseung Kwan O,5.0,3.0,0.222127,139,2
-Tsuen Wan Ho Koon,5.0,3.0,NA,122,0
-Tuen Mun,5.0,3.0,0.223975,139,2
-Waglan Island,5.0,3.0,0.450172,139,5
-Wetland Park,5.0,3.0,0.444886,139,5
-Wong Chuk Hang,5.0,3.0,0.222127,139,2
+Broadcast Drive,20.8,5.2,NA,209,0
+Cheung Chau,20.8,5.2,0.415437,209,1
+Cheung Ching,20.8,5.2,NA,209,0
+Clear Water Bay,20.8,5.2,NA,201,0
+Happy Valley,20.8,5.2,NA,209,0
+Hong Kong International Airport,20.8,5.2,0.630440,209,2
+Hong Kong Observatory,20.8,5.2,NA,208,0
+Kai Tak,20.8,5.2,NA,209,0
+Kau Sai Chau,20.8,5.2,NA,209,0
+King's Park,20.8,5.2,NA,209,0
+Kwun Tong,20.8,5.2,NA,209,0
+Lau Fau Shan,20.8,5.2,0.822821,209,3
+Magazine Gap,20.8,5.2,NA,209,0
+Ngong Ping,20.8,5.2,0.415437,209,1
+Pak Tam Chung,20.8,5.2,NA,209,0
+Peng Chau,20.8,5.2,NA,209,0
+Sai Kung,20.8,5.2,NA,209,0
+San Po Kong,20.8,5.2,NA,209,0
+Sha Tin,20.8,5.2,NA,209,0
+Sham Shui Po,20.8,5.2,NA,209,0
+Shau Kei Wan,20.8,5.2,NA,209,0
+Shek Kong,20.8,5.2,NA,0,0
+Sheung Shui,20.8,5.2,NA,209,0
+Shui Pin Wai,20.8,5.2,0.427368,209,1
+Stanley,20.8,5.2,NA,206,0
+Ta Kwu Ling,20.8,5.2,NA,209,0
+Tai Lung,20.8,5.2,NA,209,0
+Tai Mei Tuk,20.8,5.2,NA,209,0
+The Peak,20.8,5.2,NA,205,0
+Tseung Kwan O,20.8,5.2,NA,209,0
+Tsuen Wan Ho Koon,20.8,5.2,NA,189,0
+Tuen Mun,20.8,5.2,NA,209,0
+Waglan Island,20.8,5.2,NA,209,0
+Wetland Park,20.8,5.2,NA,209,0
+Wong Chuk Hang,20.8,5.2,NA,209,0

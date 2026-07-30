@@ -9,7 +9,7 @@ from datetime import datetime, timedelta
 from pathlib import Path
 
 
-BUCKET_MINUTES = 15
+BUCKET_MINUTES = 5
 
 
 @dataclass
@@ -50,7 +50,7 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description=(
             "Estimate quadratic relationships between each antenna's signal drop and Tai Po Market "
-            "rainfall using 15-minute buckets."
+            "rainfall using 5-minute buckets."
         )
     )
     parser.add_argument("--rainfall-input", default="rainfall.csv", help="Path to rainfall.csv (default: rainfall.csv).")
@@ -240,7 +240,7 @@ def build_bucketed_points(
                 antenna_name=antenna_name,
                 obs_time=bucket_time,
                 rainfall_value=rainfall_value,
-                signal_value=sum(signal_values) / len(signal_values),
+                signal_value=max(signal_values),
             )
         )
     return bucketed_points
@@ -412,7 +412,7 @@ def create_svg_plot(
     svg_lines.append('<rect x="108" y="86" width="1190" height="70" rx="10" fill="#f8f9fb" stroke="#e3e7eb"/>')
     svg_lines.append(f'<text x="120" y="116" font-size="13" fill="#212529">{equation_text}</text>')
     svg_lines.append(f'<text x="120" y="140" font-size="12" fill="#5c677d">Average signal drop used in fit: {average_signal:.4f}</text>')
-    svg_lines.append('<text x="120" y="164" font-size="12" fill="#5c677d">Gray dots: bucketed averages; pink curve: linear fit</text>')
+    svg_lines.append('<text x="120" y="164" font-size="12" fill="#5c677d">Gray dots: bucketed maximums; pink curve: linear fit</text>')
     svg_lines.append('</svg>')
 
     plot_path.parent.mkdir(parents=True, exist_ok=True)
@@ -535,7 +535,7 @@ def create_time_series_plot(
         svg_lines.append(f'<text x="{x:.2f}" y="{rainfall_bottom - 8}" text-anchor="middle" font-size="12" fill="#495057">{tick_time.strftime("%m-%d %H:%M")}</text>')
     svg_lines.extend(render_series_points(rainfall_raw_pairs, rainfall_min, rainfall_max, y_top, y_bottom, "#8a8f98", 2, 0.5))
     svg_lines.extend(render_series_points(bucketed_rainfall_pairs, rainfall_min, rainfall_max, y_top, y_bottom, "#007acc", 3, 1.0))
-    svg_lines.append(f'<text x="{left + 18}" y="{rainfall_top + 24}" font-size="12" fill="#5c677d">Gray: raw rainfall observations; blue: 15-minute interpolated rainfall</text>')
+    svg_lines.append(f'<text x="{left + 18}" y="{rainfall_top + 24}" font-size="12" fill="#5c677d">Gray: raw rainfall observations; blue: 5-minute interpolated rainfall</text>')
 
     # Signal panel
     signal_top = rainfall_bottom + panel_gap
@@ -557,7 +557,7 @@ def create_time_series_plot(
         svg_lines.append(f'<text x="{x:.2f}" y="{signal_bottom - 8}" text-anchor="middle" font-size="12" fill="#495057">{tick_time.strftime("%m-%d %H:%M")}</text>')
     svg_lines.extend(render_series_points(signal_raw_pairs, signal_min, signal_max, y_top, y_bottom, "#8a8f98", 2, 0.35))
     svg_lines.extend(render_series_points(bucketed_signal_pairs, signal_min, signal_max, y_top, y_bottom, "#d63384", 3, 1.0))
-    svg_lines.append(f'<text x="{left + 18}" y="{signal_top + 24}" font-size="12" fill="#5c677d">Gray: raw signal drop observations; pink: 15-minute bucket average</text>')
+    svg_lines.append(f'<text x="{left + 18}" y="{signal_top + 24}" font-size="12" fill="#5c677d">Gray: raw signal drop observations; pink: 5-minute bucket maximum</text>')
 
     svg_lines.append('</svg>')
 
@@ -639,7 +639,7 @@ def main() -> None:
         analyses.append(analysis)
 
     if not analyses:
-        raise ValueError("No overlapping 15-minute buckets were found across rainfall and antenna data.")
+        raise ValueError("No overlapping 5-minute buckets were found across rainfall and antenna data.")
 
     write_results_with_average(output_path, [analysis.result for analysis in analyses])
     all_bucketed_points = build_all_bucketed_points(analyses)
@@ -652,7 +652,7 @@ def main() -> None:
         create_svg_plot(
             plot_dir / f"{analysis.antenna_name}_rainfall_signal_drop_equation.svg",
             f"{analysis.antenna_name} rainfall vs signal drop",
-            "15-minute rainfall buckets linearly interpolated from rainfall.csv and antenna signal drops for this antenna only",
+            "5-minute rainfall buckets linearly interpolated from rainfall.csv and antenna signal drops for this antenna only",
             analysis.bucketed_points,
             coefficients,
             show_polyline=True,
@@ -669,7 +669,7 @@ def main() -> None:
     create_svg_plot(
         plot_dir / "average_rainfall_signal_drop_equation.svg",
         "Average equation vs all antenna data",
-        "All 15-minute bucketed points from every antenna; pink line shows the averaged linear equation",
+        "All 5-minute bucketed points from every antenna; pink line shows the averaged linear equation",
         all_bucketed_points,
         [average_result.coefficient_a],
         show_polyline=False,
